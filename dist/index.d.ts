@@ -1,0 +1,32 @@
+import { TransactionReceipt, WalletClient } from 'viem';
+import { hyperliquidMainnet, hyperliquidTestnet } from './chains';
+import { APYInfo, GetBurnsResponse, SDKConfig, StakeQuote, UnstakeQuote } from './types';
+export { hyperliquidMainnet, hyperliquidTestnet };
+export declare class StHYPESDK {
+    private overseerAddress;
+    private stHypeAddress;
+    private publicClient;
+    private network;
+    private walletClient?;
+    private contracts;
+    constructor(config: SDKConfig);
+    setWalletClient(walletClient: WalletClient): void;
+    private checkWalletClient;
+    private getOverseerContract;
+    private getStHypeContract;
+    private getWrappedStHypeContract;
+    getStakeQuote(amount: bigint): Promise<StakeQuote>;
+    approveUnstake(amount: bigint): Promise<TransactionReceipt>;
+    stake(address: `0x${string}`, amount: bigint, communityCode?: string): Promise<TransactionReceipt>;
+    unstake(address: `0x${string}`, amount: bigint, communityCode?: string): Promise<TransactionReceipt>;
+    redeem(burnId: bigint): Promise<TransactionReceipt>;
+    isRedeemable(burnId: bigint): Promise<boolean>;
+    getMaxRedeemable(): Promise<bigint>;
+    getBalancesStHype(walletAddress: string): Promise<bigint>;
+    getBalancesWrappedStHype(walletAddress: string): Promise<bigint>;
+    getUnstakeQuote(amount: bigint): Promise<UnstakeQuote>;
+    getTotalSupply(): Promise<bigint>;
+    getAPY(): Promise<APYInfo>;
+    getBurns(walletAddress: `0x${string}`): Promise<GetBurnsResponse>;
+    private handleError;
+}

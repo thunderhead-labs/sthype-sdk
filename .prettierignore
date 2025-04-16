@@ -1,0 +1,10 @@
+node_modules
+dist
+coverage
+*.min.js
+*.min.css
+*.d.ts
+*.json
+*.md
+*.yml
+*.yaml 
