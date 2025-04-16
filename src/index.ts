@@ -67,26 +67,18 @@ export class StHYPESDK {
 
   public async getStakeQuote(amount: bigint): Promise<StakeQuote> {
     try {
-      const stHypeContract = this.getStHypeContract();
       const overseerContract = this.getOverseerContract();
-
-      const oneStHype = BigInt(1e18);
-      const [sharesForOne, maxRedeemable] = await Promise.all([
-        stHypeContract.read.balanceToShares([oneStHype]) as Promise<bigint>,
-        overseerContract.read.maxRedeemable() as Promise<bigint>,
-      ]);
-
-      const rate = Number(sharesForOne) / 1e18;
+      const [maxRedeemable] = await Promise.all([overseerContract.read.maxRedeemable() as Promise<bigint>]);
+      const instantAmount = amount <= maxRedeemable ? amount : maxRedeemable;
+      const deferredAmount = amount > maxRedeemable ? amount - maxRedeemable : BigInt(0);
       const outputAmount = amount;
-      const wstHypeAmount = BigInt(Math.floor(Number(amount) * rate));
 
       return {
         inputAmount: amount,
         outputAmount,
-        ratio: 1,
-        wstHypeRate: rate,
-        wstHypeAmount,
-        maxRedeemable,
+        instantAmount,
+        deferredAmount,
+        maxInstantUnstake: maxRedeemable,
       };
     } catch (error) {
       this.handleError(error);
@@ -256,7 +248,6 @@ export class StHYPESDK {
       `;
 
       const data = await graphqlRequest<{ statsAtRebases: { apr: number } }>(GRAPHQL_URL_INDEXER, query);
-
       const apy = data.statsAtRebases.apr;
       if (apy === undefined) {
         throw new SDKError('APY data not found in response', 'MISSING_APY_DATA');

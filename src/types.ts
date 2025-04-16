@@ -95,10 +95,9 @@ export interface GetBurnsResponse {
 export interface StakeQuote {
   inputAmount: bigint;
   outputAmount: bigint;
-  ratio: number;
-  wstHypeRate: number;
-  wstHypeAmount: bigint;
-  maxRedeemable: bigint;
+  instantAmount: bigint;
+  deferredAmount: bigint;
+  maxInstantUnstake: bigint;
 }
 
 export interface UnstakeQuote {

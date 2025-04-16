@@ -33,7 +33,6 @@ const stHypeBalance = await sdk.getBalancesStHype('0x...');
 const wrappedStHypeBalance = await sdk.getBalancesWrappedStHype('0x...');
 const apy = await sdk.getAPY();
 const totalSupply = await sdk.getTotalSupply();
-const wstHypeRate = await sdk.getWstHypeRate();
 
 // Get quotes
 const stakeQuote = await sdk.getStakeQuote(BigInt(1e18));
@@ -142,7 +141,7 @@ You can access properties like `transactionHash` to get the transaction hash, or
 
 ## Features
 
-- Get staking information (balance, APY, total supply, wstHYPE rate)
+- Get staking information (balance, APY, total supply)
 - Get staking and unstaking quotes
 - Stake HYPE tokens
 - Unstake stHYPE tokens
@@ -172,15 +171,6 @@ interface APYInfo {
 #### `getTotalSupply(): Promise<bigint>`
 Returns the total supply of stHYPE tokens.
 
-```typescript
-interface WstHypeRateInfo {
-  rate: number;
-  oneStHype: bigint;
-  sharesForOne: bigint;
-  decimals: number;
-}
-```
-
 ### Staking Operations
 
 #### `getStakeQuote(amount: bigint): Promise<StakeQuote>`
@@ -191,8 +181,6 @@ interface StakeQuote {
   inputAmount: bigint;
   outputAmount: bigint;
   ratio: number;
-  wstHypeRate: number;
-  wstHypeAmount: bigint;
   maxRedeemable: bigint;
 }
 ```

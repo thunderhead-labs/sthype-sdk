@@ -1,6 +1,6 @@
 {
   "name": "@sthype/sdk",
-  "version": "1.2.0-alpha.1",
+  "version": "1.0.1",
   "description": "TypeScript SDK for interacting with the staked HYPE (stHYPE) native Hyperliquid liquid staking protocol",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
